@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/itemPerSendTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:textColor="?attr/hintTextColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020-09-07 20:28" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/itemPerSendHeader"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:roundPercent="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemPerSendTime"
+        tools:ignore="ContentDescription" />
+
+    <Space
+        android:id="@+id/itemPerAcceptSpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@id/itemPerSendHeader"
+        app:layout_constraintEnd_toStartOf="@id/itemPerSendHeader" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.2" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/itemPerSendAction"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/itemPerSendHeader"-->
+<!--        app:layout_constraintTop_toTopOf="@id/itemPerSendHeader"-->
+<!--        app:layout_constraintWidth_percent="0.66"-->
+<!--        app:layout_constraintWidth_max="wrap"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/box_chat_send"-->
+<!--        android:minHeight="36dp"-->
+<!--        android:textColor="?attr/tabTextColor"-->
+<!--        android:textSize="14sp"-->
+<!--        tools:text="JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了JOO订阅了" />-->
+
+    <FrameLayout
+        app:layout_constraintEnd_toStartOf="@id/itemPerSendHeader"
+        app:layout_constraintTop_toTopOf="@id/itemPerSendHeader"
+        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_percent="0.66"
+        android:minHeight="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/itemPerSendAction"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_gravity="center"
+            tools:text="我方消息"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
