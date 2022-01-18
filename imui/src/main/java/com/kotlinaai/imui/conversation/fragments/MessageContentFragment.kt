@@ -1,39 +1,80 @@
 package com.kotlinaai.imui.conversation.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import com.kotlinaai.imui.R
 import com.kotlinaai.imui.base.BaseFragment
-import com.kotlinaai.imui.conversation.adapters.UIMessageAdapter
+import com.kotlinaai.imui.base.list.ListFragment
+import com.kotlinaai.imui.conversation.adapters.MessageItem
+import com.kotlinaai.imui.conversation.adapters.messageItems.ImageMessageItem
+import com.kotlinaai.imui.conversation.adapters.messageItems.SystemMessageItem
+import com.kotlinaai.imui.conversation.adapters.messageItems.TextMessageItem
+import com.kotlinaai.imui.conversation.adapters.messageItems.VideoMessageItem
+import com.kotlinaai.imui.conversation.composables.MessageList
 import com.kotlinaai.imui.conversation.inters.MessageSourceFactory
+import com.kotlinaai.imui.conversation.pojos.UIMessage
 import com.kotlinaai.imui.conversation.viewmodels.MessageListViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import com.kotlinaai.imui.ui.theme.IMUITheme
 
-class MessageContentFragment : BaseFragment() {
+class MessageContentFragment : ListFragment<String, UIMessage>() {
 
     private val viewModel by viewModels<MessageListViewModel>()
-    private val messageAdapter = UIMessageAdapter()
+
+    /*private lateinit var binding: FragmentMessageContentBinding
+    private val messageAdapter = UIMessageAdapter()*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message_content, container, false)
+    ): View {
+        /*binding = FragmentMessageContentBinding.inflate(inflater, container, false)
+
+        binding.recyclerView.adapter = messageAdapter
+
+        return binding.root*/
+        listViewModel.isLayoutReversed = true
+        listViewModel.listItemTypeStore.addItem(
+            TextMessageItem(
+                onAvatarClicked = { viewModel.onAvatarOnClicked?.invoke(it)},
+                onContentClicked = { view, message -> viewModel.onContentClicked?.invoke(view, message)}
+            ))
+        listViewModel.listItemTypeStore.addItem(
+            ImageMessageItem(
+                onAvatarClicked = { viewModel.onAvatarOnClicked?.invoke(it)},
+                onContentClicked = { view, message -> viewModel.onContentClicked?.invoke(view, message)}
+            ))
+        listViewModel.listItemTypeStore.addItem(
+            VideoMessageItem(
+                onAvatarClicked = { viewModel.onAvatarOnClicked?.invoke(it)},
+                onContentClicked = { view, message -> viewModel.onContentClicked?.invoke(view, message)}
+            ))
+        listViewModel.listItemTypeStore.addItem(SystemMessageItem())
+
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                IMUITheme {
+                    Surface(modifier = Modifier.fillMaxSize()) {
+                        MessageList(listViewModel)
+                    }
+                }
+            }
+        }
     }
 
-    fun <KEY: Any> setMessageSource(messageSourceFactory: MessageSourceFactory<KEY>) {
+    fun onAvatarClicked(onAvatarOnClicked: ((UIMessage) -> Unit)) {
+        viewModel.onAvatarOnClicked = onAvatarOnClicked
+    }
 
-        viewModel.setMessageSource(messageSourceFactory) {
-            messageAdapter.submitData(it)
-        }
+    fun onContentClicked(onContentClicked: ((View?, UIMessage) -> Unit)) {
+        viewModel.onContentClicked = onContentClicked
     }
 }

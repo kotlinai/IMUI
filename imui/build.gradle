@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
+    id 'maven-publish'
 }
 
 android {
@@ -13,6 +14,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildTypes {
@@ -28,22 +32,45 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    dataBinding {
+    /*dataBinding {
         enabled = true
+    }*/
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def paging_version = "3.1.0"
     def lifecycle_version = "2.4.0"
-    def arch_version = "2.3.1"
+    //def arch_version = "2.3.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation "androidx.fragment:fragment-ktx:1.3.6"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    //implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.activity:activity-compose:1.4.0'
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha14"
+
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // ViewModel utilities for Compose
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     // alternately - if using Java8, use the following instead of lifecycle-compiler
@@ -51,13 +78,56 @@ dependencies {
     // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
     implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
 
+    implementation "io.coil-kt:coil-compose:1.4.0"
+    implementation "com.google.android.material:compose-theme-adapter:1.1.2"
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
+
+    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
-    implementation "androidx.paging:paging-runtime:$paging_version"
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+    /*implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'*/
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.kotlinaai.imui'
+                artifactId = 'imui'
+                version = '1.0'
+            }
+            // Creates a Maven publication called “debug”.
+            /*debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'com.kotlinaai.anl'
+                artifactId = 'anl-debug'
+                version = '1.0'
+            }*/
+        }
+
+        /*repositories {
+            mavenLocal()
+            *//*maven {
+                name = "GitHubPackages"
+                url = "https://maven.pkg.github.com/kotlinai/AvatarNameList"
+                credentials {
+                    username = "kotlinai"//project.findProperty("gpr.user") ?: System.getenv("kotlinai")
+                    password = "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"//project.findProperty("gpr.key") ?: System.getenv("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")
+                }
+            }*//*
+        }*/
+    }
 }

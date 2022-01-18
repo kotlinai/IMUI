@@ -1,3 +1,4 @@
+/*
 package com.kotlinaai.imui.conversation.adapters.messageItems
 
 import android.text.format.DateUtils
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.kotlinaai.imui.R
 import com.kotlinaai.imui.base.RecyclerBindingVH
 import com.kotlinaai.imui.conversation.adapters.MessageTypeAdapter
@@ -22,9 +22,11 @@ abstract class BaseMessageItemContainer: MessageTypeAdapter() {
 
                 if (binding is ItemBaseMessageContainerLBinding) {
                     message.avatar?.let {
-                        Glide.with(binding.avatar)
+                        */
+/*Glide.with(binding.avatar)
                             .load(it)
-                            .into(binding.avatar)
+                            .into(binding.avatar)*//*
+
                     }
                     if (message.isTimeShow)
                         message.time?.let {
@@ -57,11 +59,13 @@ abstract class BaseMessageItemContainer: MessageTypeAdapter() {
 
         val binding = ItemBaseMessageContainerLBinding.inflate(layoutInflater, parent, false)
 
-        binding.constraintLayout.loadLayoutDescription(R.xml.item_base_message_container_state)
+        */
+/*binding.constraintLayout.loadLayoutDescription(R.xml.item_base_message_container_state)
 
         binding.constraintLayout.setState(
             if (type > 0) R.id.left else R.id.right, 0, 0
-        )
+        )*//*
+
 
         addContent(layoutInflater, binding.frameContent, type)
 
@@ -70,4 +74,4 @@ abstract class BaseMessageItemContainer: MessageTypeAdapter() {
 
     abstract fun addContent(inflater: LayoutInflater, frameContent: FrameLayout, type: Int)
     abstract fun onBindView(contentView: View, message: UIMessage?)
-}
+}*/

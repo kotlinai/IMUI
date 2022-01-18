@@ -1,13 +1,6 @@
 package com.kotlinaai.imui.conversation.adapters
 
-import android.view.View
-import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.kotlinaai.imui.conversation.adapters.messageItems.TextMessageItem
-import com.kotlinaai.imui.conversation.pojos.UIMessage
-
+/*
 class UIMessageAdapter: PagingDataAdapter<UIMessage, RecyclerView.ViewHolder>(MessageCompare) {
 
     object MessageCompare: DiffUtil.ItemCallback<UIMessage>() {
@@ -39,14 +32,16 @@ class UIMessageAdapter: PagingDataAdapter<UIMessage, RecyclerView.ViewHolder>(Me
         )
     }
 
-    /**
+    */
+/**
      * > 0 接收消息
      * < 0 发出消息
-     */
+     *//*
+
     override fun getItemViewType(position: Int): Int {
 
         return getItem(position)?.messageType ?: -1
     }
 
     class DefaultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-}
+}*/

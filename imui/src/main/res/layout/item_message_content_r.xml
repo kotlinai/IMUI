@@ -54,7 +54,6 @@
             android:id="@+id/imgFault"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/icon_fault"
             android:layout_marginEnd="10dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/frameContent"

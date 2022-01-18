@@ -2,4 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kotlinaai.imui">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application android:theme="@style/Theme.IMUI">
+        <activity
+            android:name="com.kotlinaai.imui.IMUIActivity"
+            android:label="@string/title_activity_imuiactivity"
+            android:theme="@style/Theme.IMUI" >
+
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+    </application>
+
 </manifest>
